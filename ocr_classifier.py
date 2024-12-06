@@ -1,8 +1,10 @@
-import pytesseract 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Seminario4\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
-print(pytesseract.get_tesseract_version())
+import pytesseract
 from pdf2image import convert_from_path
 
+# Configurar o caminho para o Tesseract
+pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Seminario4\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+
+# Palavras-chave para classificar documentos
 keywords = {
     "passport": ["パスポート", "pasaporte", "passport", "passaporte"],
     "insurance": ["保険加入", "seguro", "insurance", "seguro de saúde", "確保", "Cobertura", "coverage", "保険"],
@@ -11,13 +13,18 @@ keywords = {
 }
 
 def analisar_e_classificar_pdf(pdf_path):
-    pages = convert_from_path(pdf_path)
-    texto_extraido = ""
-    for page in pages:
-        texto_extraido += pytesseract.image_to_string(page, lang="jpn+spa+por+eng")
-    
-    for categoria, palavras in keywords.items():
-        for palavra in palavras:
-            if palavra.lower() in texto_extraido.lower():
-                return categoria  
-    return "unknown"
+    try:
+        pages = convert_from_path(pdf_path)  # Converte as páginas do PDF para imagens
+        texto_extraido = ""
+        for page in pages:
+            texto_extraido += pytesseract.image_to_string(page, lang="jpn+spa+por+eng")
+        
+        # Verificar palavras-chave
+        for categoria, palavras in keywords.items():
+            for palavra in palavras:
+                if palavra.lower() in texto_extraido.lower():
+                    return categoria  # Retorna a categoria correspondente
+        return "unknown"  # Se nenhuma palavra-chave for encontrada
+    except Exception as e:
+        print(f"Erro ao processar PDF: {pdf_path} - {e}")
+        return "error"
