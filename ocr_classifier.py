@@ -8,7 +8,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Seminario4\AppData\Local\Prog
 keywords = {
     "passport": ["パスポート", "pasaporte", "passport", "passaporte"],
     "insurance": ["保険加入", "seguro", "insurance", "seguro de saúde", "確保", "Cobertura", "coverage", "保険"],
-    "id_card": ["身分証", "documento de identidad", "identification", "identidade"],
+    "id_card": ["身分証", "documento de identidad", "identification", "identidade", "emissão"],
     "vaccine_certificate": ["予防接種証明書", "certificado de vacunación", "vaccination certificate", "certificado de vacinação"]
 }
 
